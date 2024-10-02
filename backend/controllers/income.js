@@ -17,7 +17,7 @@ exports.addIncome = async (req, res) => {
         if(!title || !category || !description || !date){
             return res.status(400).json({message: 'All fields are required!'})
         }
-        if(amount <= 0 || !amount === 'number'){
+        if(amount <= 0 || !typeof amount === 'number'){
             return res.status(400).json({message: 'Amount must be a positive number!'})
         }
         await income.save()
@@ -40,6 +40,7 @@ exports.getIncomes = async (req, res) =>{
 
 exports.deleteIncome = async (req, res) =>{
     const {id} = req.params;
+    console.log("id : ",id);
     IncomeSchema.findByIdAndDelete(id)
         .then((income) =>{
             res.status(200).json({message: 'Income Deleted'})
